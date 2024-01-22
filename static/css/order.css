@@ -1,0 +1,14 @@
+body{
+    background-color: cadetblue;
+}
+
+table{
+    border: 1px solid black;
+    margin-top: 15px;
+    width: 100%;
+    background-color: aqua;
+}
+tr,th,td{
+    border: 1px solid black;
+}
+

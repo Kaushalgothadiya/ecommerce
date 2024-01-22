@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+{% endblock %}
+{% block content %}
+<h1>order page</h1>
+
+<form>
+<label for="search">Search here:</label>
+<input type="search" id="search" name="search" value={{search_term}}>
+<button type="submit">Search</button>
+</form>
+
+<table>
+    <tr>
+        <th>customer name</th>
+        <th>item</th>
+        <th>price</th>
+        <th>quantity</th>
+        <th>Total Price</th>
+        <th>Delete</th>
+      </tr>
+    {% for order in orders %}
+
+    <tr>
+        <td>{{order.customer_name}}</td>
+        <td>{{order.item}}</td>
+        <td>{{order.price}}</td>
+        <td>{{order.quantity}}</td>
+        <td>{{order.total_price}}</td>
+        <td><a href="/delete_order/{{order.id}}"><button>Delete</button></a></td>
+    </tr>
+      
+    {% endfor %}
+</table>
+{% endblock %}

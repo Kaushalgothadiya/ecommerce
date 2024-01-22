@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock %}
+{% block content %}
+<h1>store page</h1>
+<form action="{% url 'my_view' %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">submit</button>
+</form>
+{% endblock %}

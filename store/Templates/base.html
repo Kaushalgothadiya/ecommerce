@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+    <h1>base page</h1>
+    {% block content %}
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+
+
+//-------------------------update price using ajax--------------------------------------------------
+
+
+//update total-price
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     // Attach a click event to the order details link
+    //     console.log("first",document.getElementById('id_item'))
+    //     document.getElementById('id_item').addEventListener('change', function (e) {
+    //         e.preventDefault();
+    //         // Get the order ID from the link's data attribute
+    //         // var itemId =$(this).find(':selected').data('item-id');
+
+    //         // Make an Ajax request to the Django view
+    //         $.ajax({
+    //             url: '/get-item-prices/' + e.target.value + '/',
+    //             type: 'GET',
+    //             dataType: 'json',
+    //             success: function (data) {
+    //                 // Update the total price on the page
+    //                 document.getElementById('id_price').value = data.prices;
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 console.error('Error fetching order details:', error);
+    //             }
+    //         });
+    //     });
+    // });
+
+    $(document).ready(function () {
+    // Attach a change event to the item select element with id 'id_item'
+    $('#id_item').on('change', function (e) {
+        e.preventDefault();
+        
+        // Make an Ajax request to the Django view
+        $.ajax({
+            url: '/get-item-prices/' + $(this).val() + '/',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // Update the total price on the page
+                $('#id_price').val(data.prices);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching order details:', error);
+            }
+        });
+    });
+});
+
+
+//add event listner for onchnage event of quantity field
+
+    function updateTotalPrice(){
+        const selectedquantity=document.getElementById("id_quantity").value
+        const selectedItemPrice=document.getElementById("id_price").value
+
+        const selectedTotalPrice=document.getElementById("id_total_price")
+        if (selectedItemPrice && selectedquantity){
+            var TotalPrice=selectedquantity*selectedItemPrice
+            
+            selectedTotalPrice.value=TotalPrice.toFixed(2)
+            console.log(selectedTotalPrice.value)
+        }
+    }
+    document.getElementById("id_price").addEventListener("change",updateTotalPrice)
+    document.getElementById("id_quantity").addEventListener("change",updateTotalPrice)
+
+    </script>
+</body>
+</html>
